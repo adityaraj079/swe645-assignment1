@@ -25,7 +25,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
 
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="index.html">Back to Home</a>
+        <a class="navbar-brand" href="{{ url_for('index') }}">Back to Home</a>
     </div>
 </nav>
 
@@ -35,12 +35,12 @@ Purpose: Student Survey Form for SWE645 Assignment 1
 
             <h2 class="mb-4">Student Survey Form</h2>
 
-            <!-- Success Message -->
-            <div id="successMessage" class="alert alert-success d-none">
+            <!-- Success Message (controlled by Flask variable) -->
+            <div id="successMessage" class="alert alert-success {% if not success %}d-none{% endif %}">
                 Thank you! Your survey has been submitted successfully.
             </div>
 
-            <form id="surveyForm" novalidate>
+            <form id="surveyForm" method="POST" novalidate>
 
                 <!-- Personal Information -->
                 <div class="row g-3">
@@ -49,7 +49,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
                         <label class="form-label">
                             First Name <span class="required-star">*</span>
                         </label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" name="first_name" class="form-control" required>
                         <div class="invalid-feedback">First name is required.</div>
                     </div>
 
@@ -57,7 +57,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
                         <label class="form-label">
                             Last Name <span class="required-star">*</span>
                         </label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" name="last_name" class="form-control" required>
                         <div class="invalid-feedback">Last name is required.</div>
                     </div>
 
@@ -65,7 +65,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
                         <label class="form-label">
                             Street Address <span class="required-star">*</span>
                         </label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" name="address" class="form-control" required>
                         <div class="invalid-feedback">Street address is required.</div>
                     </div>
 
@@ -73,7 +73,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
                         <label class="form-label">
                             City <span class="required-star">*</span>
                         </label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" name="city" class="form-control" required>
                         <div class="invalid-feedback">City is required.</div>
                     </div>
 
@@ -81,7 +81,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
                         <label class="form-label">
                             State <span class="required-star">*</span>
                         </label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" name="state" class="form-control" required>
                         <div class="invalid-feedback">State is required.</div>
                     </div>
 
@@ -89,7 +89,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
                         <label class="form-label">
                             Zip <span class="required-star">*</span>
                         </label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" name="zip" class="form-control" required>
                         <div class="invalid-feedback">Zip code is required.</div>
                     </div>
 
@@ -97,7 +97,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
                         <label class="form-label">
                             Telephone <span class="required-star">*</span>
                         </label>
-                        <input type="tel" class="form-control" required>
+                        <input type="tel" name="telephone" class="form-control" required>
                         <div class="invalid-feedback">Telephone number is required.</div>
                     </div>
 
@@ -105,7 +105,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
                         <label class="form-label">
                             Email <span class="required-star">*</span>
                         </label>
-                        <input type="email" class="form-control" id="email" required>
+                        <input type="email" name="email" id="email" class="form-control" required>
                         <div class="invalid-feedback">
                             Please enter a valid email address.
                         </div>
@@ -115,7 +115,7 @@ Purpose: Student Survey Form for SWE645 Assignment 1
                         <label class="form-label">
                             Date of Survey <span class="required-star">*</span>
                         </label>
-                        <input type="date" class="form-control" required>
+                        <input type="date" name="date" class="form-control" required>
                         <div class="invalid-feedback">Date is required.</div>
                     </div>
 
@@ -125,27 +125,27 @@ Purpose: Student Survey Form for SWE645 Assignment 1
 
                 <!-- Checkboxes -->
                 <label class="fw-bold">What did you like most about the campus?</label>
-                <div class="form-check"><input class="form-check-input" type="checkbox"> Students</div>
-                <div class="form-check"><input class="form-check-input" type="checkbox"> Location</div>
-                <div class="form-check"><input class="form-check-input" type="checkbox"> Campus</div>
-                <div class="form-check"><input class="form-check-input" type="checkbox"> Atmosphere</div>
-                <div class="form-check"><input class="form-check-input" type="checkbox"> Dorm Rooms</div>
-                <div class="form-check"><input class="form-check-input" type="checkbox"> Sports</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="likes" value="Students"> Students</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="likes" value="Location"> Location</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="likes" value="Campus"> Campus</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="likes" value="Atmosphere"> Atmosphere</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="likes" value="Dorm Rooms"> Dorm Rooms</div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" name="likes" value="Sports"> Sports</div>
 
                 <hr>
 
                 <!-- Radio Buttons -->
                 <label class="fw-bold">How did you become interested in the university?</label>
-                <div class="form-check"><input class="form-check-input" type="radio" name="interest"> Friends</div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="interest"> Television</div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="interest"> Internet</div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="interest"> Other</div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="interest" value="Friends"> Friends</div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="interest" value="Television"> Television</div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="interest" value="Internet"> Internet</div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="interest" value="Other"> Other</div>
 
                 <hr>
 
                 <!-- Dropdown -->
                 <label class="fw-bold">Likelihood of Recommending</label>
-                <select class="form-select">
+                <select class="form-select" name="recommendation">
                     <option>Very Likely</option>
                     <option>Likely</option>
                     <option>Unlikely</option>
@@ -155,13 +155,13 @@ Purpose: Student Survey Form for SWE645 Assignment 1
 
                 <!-- Raffle -->
                 <label class="fw-bold">Raffle (Enter at least 10 comma-separated numbers 1–100)</label>
-                <input type="text" class="form-control" placeholder="e.g. 5,12,33,45,67,89,23,90,10,2">
+                <input type="text" name="raffle" class="form-control" placeholder="e.g. 5,12,33,45,67,89,23,90,10,2">
 
                 <hr>
 
                 <!-- Comments -->
                 <label class="fw-bold">Additional Comments</label>
-                <textarea class="form-control" rows="4"></textarea>
+                <textarea class="form-control" name="comments" rows="4"></textarea>
 
                 <hr>
 
@@ -206,37 +206,24 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Always scroll to top after submit
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
 
         if (isValid) {
             successMessage.classList.remove("d-none");
             form.reset();
         }
     });
+
     form.addEventListener("reset", function () {
-
-        // Hide success message
         successMessage.classList.add("d-none");
-
-        // Remove validation error styling
         const allFields = form.querySelectorAll(".is-invalid");
         allFields.forEach(function (field) {
             field.classList.remove("is-invalid");
         });
-
-        // Scroll to top
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
     });
 });
 </script>
-
 
 </body>
 </html>
