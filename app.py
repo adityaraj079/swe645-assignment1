@@ -9,8 +9,6 @@ def index():
 @app.route("/survey", methods=["GET", "POST"])
 def survey():
     if request.method == "POST":
-        # Access form data if needed
-        # data = request.form.to_dict()
         return render_template("survey.html", success=True)
     return render_template("survey.html", success=False)
 
@@ -18,8 +16,5 @@ def survey():
 def error():
     return render_template("error.html")
 
-if __name__ == "__main__":
-    
-    # app.run(debug=True)
-
-  app.run(host="0.0.0.0", port=5000, debug=True)
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=5000)
